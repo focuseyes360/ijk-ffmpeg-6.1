@@ -1,8 +1,20 @@
 FFmpeg README
 =============
-#### CHANGELOG 
+#### CHANGELOG
+=============
+
+* 2024-1-1: 版本v0.0.2
+1.
+
+-------------
+
+* 2023-12-25: 版本v0.0.1
+1.
+
+-------------
 
 * 2023-12-15: 初始化版本.
+
 1.修改了configure文件
 ```shell
 打开configure文件并搜索SLIBNAME，找到如下命令行：
@@ -23,7 +35,8 @@ ffmpeg -re -i source.flv -c:v libx265 -c:a copy -f flv -flvflags ext_header rtmp
 ```
 * demux/拉流: 不需要格外操作，自动识别
 
-=============
+-------------
+
 FFmpeg is a collection of libraries and tools to process multimedia content
 such as audio, video, subtitles and related metadata.
 
