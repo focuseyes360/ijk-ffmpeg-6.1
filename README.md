@@ -4,7 +4,7 @@ FFmpeg README
 
 * 2023-12-15: 初始化版本.
 1.修改了configure文件
-    ```shell
+```shell
 打开configure文件并搜索SLIBNAME，找到如下命令行：
 SLIBNAME_WITH_MAJOR='$(SLIBNAME).$(LIBMAJOR)'
 LIB_INSTALL_EXTRA_CMD='$$(RANLIB)"$(LIBDIR)/$(LIBNAME)"'
@@ -15,14 +15,13 @@ SLIBNAME_WITH_MAJOR='$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)'
 LIB_INSTALL_EXTRA_CMD='$$(RANLIB)"$(LIBDIR)/$(LIBNAME)"'
 SLIB_INSTALL_NAME='$(SLIBNAME_WITH_MAJOR)'
 SLIB_INSTALL_LINKS='$(SLIBNAME)'
-    ```
+```
 2.替换了libavformat文件夹中flv.h/flvdec.c/flvenc.c,使vlc支持 hevc\vp8\vp9
 * mux/推流：需要设置: -f flv -flvflags ext_header
 ```shell
 ffmpeg -re -i source.flv -c:v libx265 -c:a copy -f flv -flvflags ext_header rtmp://192.168.0.1/live/1000
 ```
 * demux/拉流: 不需要格外操作，自动识别
-
 
 =============
 FFmpeg is a collection of libraries and tools to process multimedia content
