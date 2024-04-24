@@ -1,8 +1,10 @@
 NAME = avutil
 DESC = FFmpeg utility library
 
-HEADERS = adler32.h                                                     \
+HEADERS = thread.h                                                      \
+          adler32.h                                                     \
           aes.h                                                         \
+          application.h                                                 \
           aes_ctr.h                                                     \
           ambient_viewing_environment.h                                 \
           attributes.h                                                  \
@@ -105,6 +107,7 @@ BUILT_HEADERS = avconfig.h                                              \
 OBJS = adler32.o                                                        \
        aes.o                                                            \
        aes_ctr.o                                                        \
+       application.o                                                    \
        ambient_viewing_environment.o                                    \
        audio_fifo.o                                                     \
        avstring.o                                                       \

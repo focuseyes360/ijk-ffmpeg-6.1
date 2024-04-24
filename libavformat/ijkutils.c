@@ -22,8 +22,9 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "url.h"
-
+#include "avformat.h"
 
 #define IJK_FF_PROTOCOL(x)                                                                          \
 extern URLProtocol ff_##x##_protocol;                                                               \
@@ -34,7 +35,8 @@ int ijkav_register_##x##_protocol(URLProtocol *protocol, int protocol_size)     
         av_log(NULL, AV_LOG_ERROR, "ijkav_register_##x##_protocol: ABI mismatch.\n");               \
         return -1;                                                                                  \
     }                                                                                               \
-    memcpy(&ff_##x##_protocol, protocol, protocol_size);                                            \
+    URLProtocol *non_const_ptr = (URLProtocol *)&ff_##x##_protocol;                                 \
+    memcpy(non_const_ptr, protocol, protocol_size);                                                 \
     return 0;                                                                                       \
 }
 
@@ -65,3 +67,33 @@ IJK_DUMMY_PROTOCOL(ijklongurl);
 IJK_DUMMY_PROTOCOL(ijksegment);
 IJK_DUMMY_PROTOCOL(ijktcphook);
 IJK_DUMMY_PROTOCOL(ijkio);
+
+#define IJK_FF_DEMUXER(x)                                                                          \
+extern AVInputFormat ff_##x##_demuxer;                                                               \
+int ijkav_register_##x##_demuxer(AVInputFormat *demuxer, int demuxer_size);                        \
+int ijkav_register_##x##_demuxer(AVInputFormat *demuxer, int demuxer_size)                         \
+{                                                                                                   \
+    if (demuxer_size != sizeof(AVInputFormat)) {                                                     \
+        av_log(NULL, AV_LOG_ERROR, "ijkav_register_##x##_demuxer: ABI mismatch.\n");               \
+        return -1;                                                                                  \
+    }                                                                                               \
+    memcpy(&ff_##x##_demuxer, demuxer, demuxer_size);                                            \
+    return 0;                                                                                       \
+}
+
+#define IJK_DUMMY_DEMUXER(x)                                        \
+IJK_FF_DEMUXER(x);                                                  \
+static const AVClass ijk_##x##_demuxer_class = {                    \
+    .class_name = #x,                                               \
+    .item_name  = av_default_item_name,                             \
+    .version    = LIBAVUTIL_VERSION_INT,                            \
+    };                                                              \
+                                                                    \
+AVInputFormat ff_##x##_demuxer = {                                  \
+    .name                = #x,                                      \
+    .priv_data_size      = 1,                                       \
+    .priv_class          = &ijk_##x##_demuxer_class,                \
+};
+
+IJK_DUMMY_DEMUXER(ijklivehook);
+IJK_DUMMY_DEMUXER(ijklas);

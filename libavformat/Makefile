@@ -5,8 +5,16 @@ HEADERS = avformat.h                                                    \
           avio.h                                                        \
           version.h                                                     \
           version_major.h                                               \
+          url.h                                                         \
+          id3v1.h                                                       \
+          id3v2.h                                                       \
+          flv.h                                                         \
+          metadata.h                                                    \
+          internal.h                                                    \
+          os_support.h                                                  \
 
-OBJS = allformats.o         \
+OBJS = ijkutils.o           \
+       allformats.o         \
        avformat.o           \
        avio.o               \
        aviobuf.o            \
